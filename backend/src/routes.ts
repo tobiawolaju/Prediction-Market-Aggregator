@@ -21,6 +21,15 @@ router.get('/markets/polymarket', async (req, res) => {
     }
 });
 
+router.get('/markets/robinhood', async (req, res) => {
+    try {
+        const markets = await getMarkets('robinhood');
+        res.json(markets);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch Robinhood markets' });
+    }
+});
+
 router.get('/markets/all', async (req, res) => {
     try {
         const markets = await getMarkets();
