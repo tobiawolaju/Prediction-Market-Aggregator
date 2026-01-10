@@ -1,5 +1,5 @@
 export interface NormalizedMarket {
-    source: "kalshi" | "polymarket" | "robinhood";
+    source: "kalshi" | "polymarket" | "robinhood" | "manifold";
     marketId: string;
     eventKey: string;           // canonical event identifier
     outcome: string;            // e.g., YES / NO / outcomes[ ]

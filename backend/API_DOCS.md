@@ -20,7 +20,7 @@ Returns the status of the server.
 ## Market Data Endpoints
 
 ### Get All Markets
-Fetches and aggregates market data from all configured sources (Kalshi and Polymarket).
+Fetches and aggregates market data from all configured sources (Kalshi, Polymarket, Robinhood, and Manifold).
 
 - **URL**: `/markets/all`
 - **Method**: `GET`
@@ -78,6 +78,13 @@ Fetches market data specifically from Robinhood (Crypto).
 - **URL**: `/markets/robinhood`
 - **Method**: `GET`
 - **Response**: Array of `NormalizedMarket` objects from Robinhood.
+
+### Get Manifold Markets
+Fetches market data specifically from Manifold Markets.
+
+- **URL**: `/markets/manifold`
+- **Method**: `GET`
+- **Response**: Array of `NormalizedMarket` objects from Manifold.
 
 ## Data Model
 

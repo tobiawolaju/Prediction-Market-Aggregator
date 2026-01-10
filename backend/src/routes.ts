@@ -30,6 +30,15 @@ router.get('/markets/robinhood', async (req, res) => {
     }
 });
 
+router.get('/markets/manifold', async (req, res) => {
+    try {
+        const markets = await getMarkets('manifold');
+        res.json(markets);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch Manifold markets' });
+    }
+});
+
 router.get('/markets/all', async (req, res) => {
     try {
         const markets = await getMarkets();
