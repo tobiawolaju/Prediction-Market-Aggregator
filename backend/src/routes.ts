@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getMarkets } from './services/marketService';
+import { getNormalizedEvents } from './services/eventService';
 
 const router = Router();
 
@@ -45,6 +46,16 @@ router.get('/markets/all', async (req, res) => {
         res.json(markets);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch all markets' });
+    }
+});
+
+router.get('/events/normalized', async (req, res) => {
+    try {
+        const events = await getNormalizedEvents();
+        res.json(events);
+    } catch (error) {
+        console.error('Error fetching normalized events:', error);
+        res.status(500).json({ error: 'Failed to fetch normalized events' });
     }
 });
 
