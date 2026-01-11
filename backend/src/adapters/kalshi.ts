@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { NormalizedMarket } from '../models/normalizedMarket';
+
 
 const KALSHI_API_URL = 'https://api.elections.kalshi.com/trade-api/v2'; // Using public elections API for simplicity initially, or v2 base
 
-export async function fetchKalshiMarkets(): Promise<NormalizedMarket[]> {
+export async function fetchKalshiMarkets(): Promise<any[]> {
     try {
         // Note: For full access, we need authentication.
         // For this dirty-simple step, we'll try to hit a public endpoint or assume keys are present.

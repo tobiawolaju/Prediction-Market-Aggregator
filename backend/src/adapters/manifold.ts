@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { NormalizedMarket } from '../models/normalizedMarket';
+
 
 const MANIFOLD_API_URL = 'https://api.manifold.markets/v0';
 
-export async function fetchManifoldMarkets(): Promise<NormalizedMarket[]> {
+export async function fetchManifoldMarkets(): Promise<any[]> {
   try {
     // Fetch active markets from Manifold
     // No auth required for public market data
@@ -21,7 +21,6 @@ export async function fetchManifoldMarkets(): Promise<NormalizedMarket[]> {
         outcome: 'YES', // Binary markets
         impliedProbability: m.probability || 0.5,
         liquidity: m.totalLiquidity || m.volume || 0,
-        lastUpdated: m.lastUpdatedTime ? new Date(m.lastUpdatedTime).toISOString() : undefined,
         rawPayload: m
       }));
 

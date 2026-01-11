@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { NormalizedMarket } from '../models/normalizedMarket';
+
 
 const CLOB_API_URL = 'https://clob.polymarket.com'; // or Gamma Markets API https://gamma-api.polymarket.com/
 
-export async function fetchPolymarketMarkets(): Promise<NormalizedMarket[]> {
+export async function fetchPolymarketMarkets(): Promise<any[]> {
     try {
         // Using Gamma Markets API (likely structure)
         // Querying for active markets
@@ -12,7 +12,7 @@ export async function fetchPolymarketMarkets(): Promise<NormalizedMarket[]> {
         const response = await axios.get(url);
         const events = response.data || [];
 
-        const normalized: NormalizedMarket[] = [];
+        const normalized: any[] = [];
 
         events.forEach((event: any) => {
             if (!event.markets) return;
@@ -29,8 +29,7 @@ export async function fetchPolymarketMarkets(): Promise<NormalizedMarket[]> {
                     eventKey: event.slug || event.id,
                     outcome: m.outcome || 'YES',
                     impliedProbability: Number(m.price) || 0.5, // Check actual API field
-                    liquidity: Number(m.liquidity) || Number(m.volume) || 0,
-                    lastUpdated: m.updatedAt || new Date().toISOString(),
+                    liquidity: Number(m.volume) || 0,
                     rawPayload: m
                 });
             });

@@ -1,0 +1,295 @@
+I want to design a system tha takes raw , multiply  preddition marekt data, and generate a josn with market clain, (now normalizes, instead of being scattore, it shows market calien tht exist on the two preditionmarket. given raw json from polymarket and manifold.........let creat a normilization architeure that uses 1.rule-based canonicalization based extractor (we would have canonizietr.ts and canonizerules.js(egfor catgory crpty""if (question.includes("ETH") && question.includes("2000"))) ...........the rules...should covert all the categories in these jsons........... most markets already expose:
+
+category
+
+asset
+
+strike
+
+expiration
+
+resolution source
+
+polymarket
+
+conditionId
+
+outcomes
+
+endDate
+
+category
+
+kalshi
+
+structured tickers
+
+defined underliers
+
+deterministic templates
+
+manifold
+
+weaker, but has:
+
+outcomeType
+
+closeTime
+
+URLs
+
+mechanism type..............the rule based cononiclaiztion is run on each items in the json, and thenew result is saved in a new long json like.................{
+  "subject": "US_PRESIDENTIAL_ELECTION_2028",
+  "metric": "winner",
+  "operator": "==",
+  "threshold": "Democratic Party",
+  "deadline": "2028-11-05",
+  "resolutionSource": "AP",
+  "source":""
+  "marketId":""
+  "eventKey":"Will donal trump win the election (see now, in th rules json, donal trup will be maped to democart, that is how the treahord is detamed,)"
+}, {
+ 
+  "subject": "ETH",
+  "metric": "price_usd",
+  "operator": ">=",
+  "threshold": 2000,
+  "deadline": "2025-06-30T00:00:00Z",
+  "resolutionSource": "coinbase:ETH-USD"
+  "source":"",
+  "marketId":""
+  "eventKey":""Will Ethereum be above $2000 by June?"
+"
+
+}
+
+
+ after genareting thses 
+canonical event jsons from every single json.source being 3000/market/polymarket and 3000/market/manifold,
+
+// we go throug stage two, 
+MarketClaim..............,, is a MarketClaim.
+
+formalize that mentally:
+
+MarketClaim = {
+  subject,
+  metric,
+  operator,
+  threshold,
+  deadline,
+  resolutionSource,
+  source,
+  marketId,
+  eventKey
+}
+
+
+normalization happens across MarketClaims → CanonicalEvent.
+
+the key insight (this unlocks everything)
+
+Claims are equal if and only if their semantic core matches within tolerances.
+
+not string equality
+not slug equality
+not hash of question
+
+the semantic core is:
+(subject, metric, operator, threshold)
+
+
+everything else is context.
+
+deadlines are constraints, not identity.
+sources are observers, not identity.
+
+step 1: normalize fields BEFORE grouping (mandatory)
+
+you do NOT group raw inputs.
+
+you canonicalize first.
+
+examples
+
+subject
+
+"ETH", "Ethereum", "ETH token" → ETH
+
+metric
+
+"price", "price_usd", "USD price" → price_usd
+
+operator
+
+">=", "above", "greater than or equal to" → >=
+
+threshold
+
+"2000", "$2,000" → 2000 (number)
+
+this layer is:
+
+rule-based
+
+deterministic
+
+no LLM required
+
+LLM can help only when rules fail, not as default.
+
+step 2: build a Claim Identity Key (CIK)
+
+this is NOT the final eventID.
+
+this is the equivalence key.
+
+CIK = hash(
+  subject
+  + "|"
+  + metric
+  + "|"
+  + operator
+  + "|"
+  + normalizedThreshold
+)
+
+
+example:
+
+ETH|price_usd|>=|2000
+
+
+hash that → stable key.
+
+any MarketClaim with the same CIK is talking about the same proposition.
+
+this solves 80% of normalization.
+
+step 3: group by Claim Identity Key
+
+now you have buckets like:
+
+CIK: ETH|price_usd|>=|2000
+  - MarketClaim A (Polymarket)
+  - MarketClaim B (Manifold)
+  - MarketClaim C (Kalshi)
+
+
+this is pure systems work. scalable. fast.
+
+step 4: resolve deadline conflicts (THIS IS THE SUBTLE PART)
+
+deadlines are constraints on when the claim is evaluated.
+
+you do NOT average them.
+
+you apply dominance logic.
+
+rule you already implied (correctly):
+
+select the earliest deadline that all markets would still satisfy
+
+logic:
+
+canonical.deadline = min(deadlines)
+
+
+WHY:
+
+market resolving earlier is strictly stronger
+
+later deadlines are a superset proposition
+
+example:
+
+“ETH >= 2000 by June 30”
+
+“ETH >= 2000 by July 31”
+
+→ both true if ETH crosses before June 30
+→ not equivalent the other way
+
+so canonical = earliest.
+
+step 5: resolutionSource selection
+
+resolution source must be:
+
+deterministic
+
+authoritative
+
+consistent
+
+rules:
+
+if all agree → pick it
+
+else prefer:
+
+exchange feeds (coinbase, CME)
+
+official bodies (AP, FEC)
+
+else mark as MIXED
+
+never guess silently.
+
+step 6: build the CanonicalEvent
+
+now you can safely construct:
+
+CanonicalEvent = {
+  eventID,
+  subject,
+  metric,
+  operator,
+  threshold,
+  deadline,
+  resolutionSource,
+  markets: [...]
+}
+
+eventID (do NOT mess this up)
+
+eventID should be:
+
+hash(
+  subject
+  + "|"
+  + metric
+  + "|"
+  + operator
+  + "|"
+  + threshold
+  + "|"
+  + deadline
+)
+
+
+NOT the question.
+NOT the marketId.
+NOT the venue.
+
+this ensures:
+
+deterministic
+
+stable
+
+reproducible
+
+debuggable
+
+step 7: attach markets (observers)
+
+markets are evidence, not identity.
+
+markets: [
+  { source, marketId, eventKey },
+  ...
+]
+
+
+do not collapse their metadata away. 

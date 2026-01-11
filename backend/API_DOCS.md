@@ -1,104 +1,103 @@
-# Prediction Market Aggregator - Backend API Documentation
+# Prediction Market Aggregator - API Documentation
 
 Base URL: `http://localhost:3000`
 
-## System Endpoints
+## Core API Endpoints
 
-### Health Check
-Returns the status of the server.
+### 1. Market Claims (Atomic)
+Returns a flat list of normalized market claims. No aggregation. Each object represents ONE market from a specific source.
 
-- **URL**: `/health`
+- **URL**: `/events/marketclaims`
 - **Method**: `GET`
-- **Response**:
-  ```json
-  {
-    "status": "ok",
-    "timestamp": "2024-01-01T12:00:00.000Z"
-  }
-  ```
-
-## Market Data Endpoints
-
-### Get All Markets
-Fetches and aggregates market data from all configured sources (Kalshi, Polymarket, Robinhood, and Manifold).
-
-- **URL**: `/markets/all`
-- **Method**: `GET`
-- **Response**: Array of `NormalizedMarket` objects.
+- **Response**: `MarketClaim[]`
+- **Example**:
   ```json
   [
     {
+      "claimId": "89e9f3b1...",
       "source": "polymarket",
-      "marketId": "12345",
-      "eventKey": "will-bitcoin-hit-100k",
-      "outcome": "YES",
-      "impliedProbability": 0.65,
-      "liquidity": 150000,
-      "rawPayload": { ... }
-    },
-    {
-      "source": "robinhood",
-      "marketId": "3d961844-d360-45fc-989b-f6fca761d511",
-      "eventKey": "BTC-USD",
-      "outcome": "PRICE",
-      "impliedProbability": 0,
-      "price": 45000.50,
-      "liquidity": 0,
-      "rawPayload": { ... }
-    },
-    {
-      "source": "kalshi",
-      "marketId": "KRNY-24DEC31",
-      "eventKey": "KRNY-24DEC31",
-      "outcome": "YES",
-      "impliedProbability": 0.45,
-      "liquidity": 50000,
-      "rawPayload": { ... }
+      "marketId": "123",
+      "subject": "ETH_PRICE",
+      "metric": "price_usd",
+      "operator": ">=",
+      "threshold": 2000,
+      "deadline": "2024-12-31T23:59:59Z",
+      "resolutionSource": "coinbase",
+      "originalQuestion": "Will ETH be above $2000?",
+      "url": "https://polymarket.com/..."
     }
   ]
   ```
 
-### Get Kalshi Markets
-Fetches market data specifically from Kalshi.
+### 2. Canonical Events (Aggregated)
+Returns derived events created by grouping market claims by their semantic core (subject, metric, operator, threshold).
 
-- **URL**: `/markets/kalshi`
+- **URL**: `/events/canonical`
 - **Method**: `GET`
-- **Response**: Array of `NormalizedMarket` objects from Kalshi.
+- **Response**: `CanonicalEvent[]`
+- **Example**:
+  ```json
+  [
+    {
+      "eventID": "EVT_a1b2c3d4...",
+      "subject": "ETH_PRICE",
+      "metric": "price_usd",
+      "operator": ">=",
+      "threshold": 2000,
+      "earliestDeadline": "2024-12-31T23:59:59Z",
+      "consensusSource": "coinbase",
+      "markets": [
+        { "source": "polymarket", "marketId": "123", "url": "...", "deadline": "..." },
+        { "source": "manifold", "marketId": "456", "url": "...", "deadline": "..." }
+      ]
+    }
+  ]
+  ```
 
-### Get Polymarket Markets
-Fetches market data specifically from Polymarket.
+## Raw Market Endpoints (Adapter Level)
+These endpoints return the raw API payloads from each provider.
 
-- **URL**: `/markets/polymarket`
-- **Method**: `GET`
-- **Response**: Array of `NormalizedMarket` objects from Polymarket.
+- `GET /markets/kalshi`
+- `GET /markets/polymarket`
+- `GET /markets/robinhood`
+- `GET /markets/manifold`
+- `GET /markets/all`
 
-### Get Robinhood Markets
-Fetches market data specifically from Robinhood (Crypto).
+---
 
-- **URL**: `/markets/robinhood`
-- **Method**: `GET`
-- **Response**: Array of `NormalizedMarket` objects from Robinhood.
+## Data Models
 
-### Get Manifold Markets
-Fetches market data specifically from Manifold Markets.
-
-- **URL**: `/markets/manifold`
-- **Method**: `GET`
-- **Response**: Array of `NormalizedMarket` objects from Manifold.
-
-## Data Model
-
-### NormalizedMarket
-Standardized format for all market data.
+### MarketClaim (Atomic)
+Standardized semantic extraction for a single market.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `source` | `string` | "kalshi" or "polymarket" |
-| `marketId` | `string` | Unique identifier from the source |
-| `eventKey` | `string` | Canonical event identifier (slug or ticker) |
-| `outcome` | `string` | The outcome being predicted (e.g., "YES") |
-| `impliedProbability` | `number` | Probability between 0.0 and 1.0 |
-| `price` | `number` | (Optional) For non-probability markets (e.g. crypto) |
-| `liquidity` | `number` | (Optional) Volume or liquidity metric |
-| `spread` | `number` | (Optional) Bid-ask spread |
-| `rawPayload` | `object` | The original raw data from the provider |
+| `claimId` | `string` | Deterministic hash of `source + marketId` |
+| `subject` | `string` | Canonical identifier (e.g., `ETH_PRICE`) |
+| `metric` | `string` | The value being measured (e.g., `price_usd`) |
+| `operator` | `string` | Comparison operator (`==`, `>=`, etc.) |
+| `threshold` | `number\|string` | The target value for resolution |
+| `deadline` | `string` | ISO date string for market resolution |
+| `resolutionSource` | `string` | Expected provider of ground truth |
+| `source` | `string` | Provider (polymarket, manifold, etc.) |
+| `originalQuestion` | `string` | Raw question text from the source |
+
+### CanonicalEvent (Derived)
+A group of overlapping market claims representing a single real-world event.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `eventID` | `string` | Deterministic hash of `core + earliestDeadline` |
+| `subject` | `string` | Same as MarketClaim |
+| `metric` | `string` | Same as MarketClaim |
+| `earliestDeadline` | `string` | Minimum deadline among grouped claims |
+| `markets` | `array` | List of contributing sources and their metadata |
+
+---
+
+## System Endpoints
+
+### Health Check
+- **URL**: `/health`
+- **Method**: `GET`
+- **Response**: `{ "status": "ok", "timestamp": "..." }`

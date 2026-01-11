@@ -2,9 +2,8 @@ import { fetchKalshiMarkets } from '../adapters/kalshi';
 import { fetchPolymarketMarkets } from '../adapters/polymarket';
 import { fetchRobinhoodMarkets } from '../adapters/robinhood';
 import { fetchManifoldMarkets } from '../adapters/manifold';
-import { NormalizedMarket } from '../models/normalizedMarket';
 
-export async function getMarkets(source?: 'kalshi' | 'polymarket' | 'robinhood' | 'manifold'): Promise<NormalizedMarket[]> {
+export async function getMarkets(source?: 'kalshi' | 'polymarket' | 'robinhood' | 'manifold'): Promise<any[]> {
     if (source === 'kalshi') {
         return await fetchKalshiMarkets();
     } else if (source === 'polymarket') {

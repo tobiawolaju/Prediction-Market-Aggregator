@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { NormalizedMarket } from '../models/normalizedMarket';
+
 
 // Robinhood Crypto API often requires signed requests for private data, 
 // but for public market data (quotes/price), they might have an open endpoint or use a specific structure.
@@ -13,7 +13,7 @@ import { NormalizedMarket } from '../models/normalizedMarket';
 const RH_CRYPTO_URL = 'https://api.robinhood.com/crypto/marketdata';
 // Or commonly suggested: https://api.robinhood.com/marketdata/forex/quotes/{id}/
 
-export async function fetchRobinhoodMarkets(): Promise<NormalizedMarket[]> {
+export async function fetchRobinhoodMarkets(): Promise<any[]> {
     try {
         // For this demonstration/first pass without an active account/key verification:
         // We will simulate fetching a few major crypto pairs which act as "markets" for price.
