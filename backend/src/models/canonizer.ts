@@ -53,6 +53,7 @@ export class Canonizer {
                         metric: partial.metric!,
                         operator: partial.operator!,
                         threshold: partial.threshold!,
+                        eventScope: partial.eventScope || 'UNSPECIFIED_EVENT',
                         deadline,
                         resolutionSource: partial.resolutionSource || 'GENERAL_CONSENSUS',
                         source: source as any,

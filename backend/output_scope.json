@@ -1,0 +1,416 @@
+[
+  {
+    "eventID": "EVT_4773ecb948936933",
+    "subject": "SPORTS_MAVERICKS",
+    "metric": "point_spread",
+    "operator": ">",
+    "threshold": 5.5,
+    "eventScope": "nba_2024_grizzlies_mavericks",
+    "earliestDeadline": "2021-12-04T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "polymarket",
+        "marketId": "239826",
+        "url": "https://polymarket.com/event/nba-will-the-mavericks-beat-the-grizzlies-by-more-than-5pt5-points-in-their-december-4-matchup",
+        "deadline": "2021-12-04T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_fef26e60ad0d0a05",
+    "subject": "SPORTS_FALCONS",
+    "metric": "point_spread",
+    "operator": ">",
+    "threshold": 3.5,
+    "eventScope": "nfl_2024_falcons_panthers",
+    "earliestDeadline": "2021-10-31T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "polymarket",
+        "marketId": "239167",
+        "url": "https://polymarket.com/event/nfl-will-the-falcons-beat-the-panthers-by-more-than-3pt5-points-in-their-october-31st-matchup",
+        "deadline": "2021-10-31T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_10c7d8d4d9282e0f",
+    "subject": "SPORTS_49ERS",
+    "metric": "point_spread",
+    "operator": ">",
+    "threshold": 3.5,
+    "eventScope": "generic_2024_49ers_packers",
+    "earliestDeadline": "2021-09-26T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "polymarket",
+        "marketId": "238885",
+        "url": "https://polymarket.com/event/in-game-trading-will-the-49ers-beat-the-packers-by-more-than-3pt5-points-in-their-week-three-matchup",
+        "deadline": "2021-09-26T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_9c0444c2f3421515",
+    "subject": "SPORTS_HEAT",
+    "metric": "point_spread",
+    "operator": ">",
+    "threshold": 7.5,
+    "eventScope": "nba_2024_heat_wizards",
+    "earliestDeadline": "2021-11-18T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "polymarket",
+        "marketId": "239496",
+        "url": "https://polymarket.com/event/nba-will-the-heat-beat-the-wizards-by-more-than-7pt5-points-in-their-november-18th-matchup",
+        "deadline": "2021-11-18T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_737c162edcccc666",
+    "subject": "SPORTS_JAGUARS",
+    "metric": "point_spread",
+    "operator": ">",
+    "threshold": 3.5,
+    "eventScope": "nfl_2024_jaguars_texans",
+    "earliestDeadline": "2021-12-19T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "polymarket",
+        "marketId": "240067",
+        "url": "https://polymarket.com/event/nfl-will-the-jaguars-beat-the-texans-by-more-than-3pt5-points-in-their-december-19-matchup",
+        "deadline": "2021-12-19T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_5e16e53546d79e3d",
+    "subject": "SPORTS_CLIPPERS",
+    "metric": "point_spread",
+    "operator": ">",
+    "threshold": 2.5,
+    "eventScope": "nba_2024_celtics_clippers",
+    "earliestDeadline": "2021-12-08T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "polymarket",
+        "marketId": "239926",
+        "url": "https://polymarket.com/event/nba-will-the-clippers-beat-the-celtics-by-more-than-2pt5-points-in-their-december-8-matchup",
+        "deadline": "2021-12-08T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_ee354c7384861e95",
+    "subject": "SPORTS_CHIEFS",
+    "metric": "point_spread",
+    "operator": ">",
+    "threshold": 3.5,
+    "eventScope": "nfl_2024_bengals_chiefs",
+    "earliestDeadline": "2022-01-02T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "polymarket",
+        "marketId": "240271",
+        "url": "https://polymarket.com/event/nfl-will-the-chiefs-beat-the-bengals-by-more-than-3pt5-points-in-their-january-2-matchup",
+        "deadline": "2022-01-02T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_396e7960e608d74f",
+    "subject": "POP_CULTURE_EVENT",
+    "metric": "box_office_usd",
+    "operator": ">=",
+    "threshold": 90,
+    "eventScope": "POP_CULTURE_GLOBAL",
+    "earliestDeadline": "2022-06-20T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "polymarket",
+        "marketId": "246547",
+        "url": "https://polymarket.com/event/will-lightyear-gross-more-than-90-million-domestically-in-its-opening-weekend",
+        "deadline": "2022-06-20T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_bad4cbff9004ef10",
+    "subject": "SPORTS_CARDINALS",
+    "metric": "point_spread",
+    "operator": ">",
+    "threshold": 2.5,
+    "eventScope": "nfl_2024_cardinals_rams",
+    "earliestDeadline": "2021-12-13T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "polymarket",
+        "marketId": "240017",
+        "url": "https://polymarket.com/event/nfl-will-the-cardinals-beat-the-rams-by-more-than-2pt5-points-in-their-december-13-matchup",
+        "deadline": "2021-12-13T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_72c87deb94c79d01",
+    "subject": "ETH_PRICE",
+    "metric": "price_usd",
+    "operator": ">=",
+    "threshold": 1,
+    "eventScope": "GLOBAL",
+    "earliestDeadline": "2022-06-14T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "polymarket",
+        "marketId": "246499",
+        "url": "https://polymarket.com/event/will-the-floor-price-of-we-are-all-going-to-die-be-above-1-eth-on-june-14",
+        "deadline": "2022-06-14T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_821898840a4e1ff5",
+    "subject": "SPORTS_THE_SPURS_OR_THE_GRIZZLIES",
+    "metric": "match_winner",
+    "operator": "==",
+    "threshold": "WINNER",
+    "eventScope": "nba_2024_the_spurs_or_the_grizzlies_unknown",
+    "earliestDeadline": "2021-05-19T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "polymarket",
+        "marketId": "200261",
+        "url": "https://polymarket.com/event/will-the-spurs-or-the-grizzlies-win-their-nba-play-in-tournament-matchup",
+        "deadline": "2021-05-19T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_b5f2ae35b58ba1f6",
+    "subject": "NATURAL_GAS_PRICE",
+    "metric": "price_usd",
+    "operator": ">=",
+    "threshold": 9,
+    "eventScope": "GLOBAL",
+    "earliestDeadline": "2022-06-17T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "polymarket",
+        "marketId": "246523",
+        "url": "https://polymarket.com/event/will-natural-gas-close-above-9-on-june-17-2022",
+        "deadline": "2022-06-17T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_26ea961b4a7d9cc3",
+    "subject": "SPORTS_SPORTS_EVENT",
+    "metric": "match_winner",
+    "operator": "==",
+    "threshold": "WINNER",
+    "eventScope": "soccer_2020_sports_event_unknown",
+    "earliestDeadline": "2021-07-03T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "polymarket",
+        "marketId": "220017",
+        "url": "https://polymarket.com/event/will-the-czech-republic-or-denmark-qualify-for-the-euro-2020-semifinals",
+        "deadline": "2021-07-03T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_ea1209b9d1471fea",
+    "subject": "POP_CULTURE_EVENT",
+    "metric": "peak_player_count",
+    "operator": ">=",
+    "threshold": 5,
+    "eventScope": "POP_CULTURE_GLOBAL",
+    "earliestDeadline": "2022-04-15T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "polymarket",
+        "marketId": "242648",
+        "url": "https://polymarket.com/event/will-lost-ark-be-in-the-top-5-most-played-games-on-steam-on-april-15-2022",
+        "deadline": "2022-04-15T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_712f80f99acd4d26",
+    "subject": "SPORTS_CELTICS",
+    "metric": "match_winner",
+    "operator": "==",
+    "threshold": "WINNER",
+    "eventScope": "nba_2022_bucks_celtics",
+    "earliestDeadline": "2022-05-16T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "polymarket",
+        "marketId": "243987",
+        "url": "https://polymarket.com/event/2022-nba-playoffs-round-2-who-will-win-celtics-vs-bucks",
+        "deadline": "2022-05-16T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_e0056412d1439f86",
+    "subject": "US_PRES_ELECTION_2024",
+    "metric": "winner",
+    "operator": "==",
+    "threshold": "DEMOCRATIC_PARTY",
+    "eventScope": "US_PRES_ELECTION_2024",
+    "earliestDeadline": "2026-11-02T23:59:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "manifold",
+        "marketId": "gdPLLshSZg",
+        "url": "https://manifold.markets/EvanDaniel/democratic-house-seats-after-2026-2",
+        "deadline": "2026-11-02T23:59:00.000Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_d678cd2b1e565ac1",
+    "subject": "US_PRES_ELECTION_2024",
+    "metric": "winner",
+    "operator": "==",
+    "threshold": "REPUBLICAN_PARTY",
+    "eventScope": "US_PRES_ELECTION_2024",
+    "earliestDeadline": "2026-11-03T00:00:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "manifold",
+        "marketId": "ugsSpQLcc9",
+        "url": "https://manifold.markets/EvanDaniel/republican-senate-seats-after-2026",
+        "deadline": "2026-11-03T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_bded32f5b9d30885",
+    "subject": "COMMODITY",
+    "metric": "price_usd",
+    "operator": "==",
+    "threshold": 2026,
+    "eventScope": "GLOBAL",
+    "earliestDeadline": "2026-12-31T23:59:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "manifold",
+        "marketId": "9zlLP9nZzq",
+        "url": "https://manifold.markets/KieranGoode/will-donald-trump-mention-nancy-pel",
+        "deadline": "2026-12-31T23:59:00.000Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_2eebcdc5c8c191f8",
+    "subject": "SPORTS_A_UKRAINIAN_ATHLETE",
+    "metric": "match_winner",
+    "operator": "==",
+    "threshold": "WINNER",
+    "eventScope": "generic_2026_a_ukrainian_athlete_unknown",
+    "earliestDeadline": "2026-02-22T23:59:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "manifold",
+        "marketId": "lEtdlI0lcO",
+        "url": "https://manifold.markets/proseller/will-a-ukrainian-athlete-win-a-race",
+        "deadline": "2026-02-22T23:59:00.000Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_a93413737ce4c559",
+    "subject": "SPORTS_SPORTS_EVENT",
+    "metric": "match_winner",
+    "operator": "==",
+    "threshold": "WINNER",
+    "eventScope": "generic_2026_real_sports_event",
+    "earliestDeadline": "2026-01-11T23:59:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "manifold",
+        "marketId": "OUdCLChdg2",
+        "url": "https://manifold.markets/abq/barcelona-vs-real-madrid-2026-spani",
+        "deadline": "2026-01-11T23:59:00.000Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_92286175c305cabb",
+    "subject": "SPORTS_THERE_BE_A_FIRST_TIME_MAJOR",
+    "metric": "match_winner",
+    "operator": "==",
+    "threshold": "WINNER",
+    "eventScope": "generic_2026_there_be_a_first_time_major_unknown",
+    "earliestDeadline": "2026-12-31T23:59:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "manifold",
+        "marketId": "RRtN52QOn8",
+        "url": "https://manifold.markets/Zeolite/will-there-be-a-first-time-major-wi",
+        "deadline": "2026-12-31T23:59:00.000Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_873b8e05bafc9322",
+    "subject": "US_PRES_ELECTION_2024",
+    "metric": "winner",
+    "operator": "==",
+    "threshold": "DONALD_TRUMP",
+    "eventScope": "US_PRES_ELECTION_2024",
+    "earliestDeadline": "2026-12-31T23:59:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "manifold",
+        "marketId": "C5Q6PPnq25",
+        "url": "https://manifold.markets/Xiphias/largest-antitrump-protests-in-2026",
+        "deadline": "2026-12-31T23:59:00.000Z"
+      }
+    ]
+  },
+  {
+    "eventID": "EVT_0a2149e1efebbf92",
+    "subject": "POP_CULTURE_EVENT",
+    "metric": "peak_player_count",
+    "operator": ">=",
+    "threshold": 2030,
+    "eventScope": "POP_CULTURE_GLOBAL",
+    "earliestDeadline": "2030-12-31T23:59:00.000Z",
+    "consensusSource": "GENERAL_CONSENSUS",
+    "markets": [
+      {
+        "source": "manifold",
+        "marketId": "5uQld6Pylu",
+        "url": "https://manifold.markets/BlackCrusade/a-factory-building-video-game-with",
+        "deadline": "2030-12-31T23:59:00.000Z"
+      }
+    ]
+  }
+]

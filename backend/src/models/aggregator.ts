@@ -2,15 +2,19 @@ import crypto from 'crypto';
 import { MarketClaim, CanonicalEvent } from './types';
 
 export class Aggregator {
-    /** Generate Semantic Grouping Key based on semantic core only */
+    /** Generate Semantic Grouping Key based on semantic core + eventScope */
     private getSemanticGroupingKey(claim: MarketClaim): string {
-        const rawKey = `${claim.subject}|${claim.metric}|${claim.operator}|${claim.threshold}`;
+        // If it's a match_winner metric with an unspecified event, it must never be merged.
+        if (claim.metric === 'match_winner' && claim.eventScope === 'UNSPECIFIED_EVENT') {
+            return `UNGROUPED_${claim.claimId}`;
+        }
+        const rawKey = `${claim.subject}|${claim.metric}|${claim.operator}|${claim.threshold}|${claim.eventScope}`;
         return crypto.createHash('sha256').update(rawKey).digest('hex');
     }
 
-    /** Deterministic Event ID includes semantic core + earliest deadline */
+    /** Deterministic Event ID includes semantic core + eventScope + earliest deadline */
     private generateEventID(claim: MarketClaim, earliestDeadline: string): string {
-        const rawKey = `${claim.subject}|${claim.metric}|${claim.operator}|${claim.threshold}|${earliestDeadline}`;
+        const rawKey = `${claim.subject}|${claim.metric}|${claim.operator}|${claim.threshold}|${claim.eventScope}|${earliestDeadline}`;
         return 'EVT_' + crypto.createHash('sha256').update(rawKey).digest('hex').substring(0, 16);
     }
 
@@ -42,6 +46,7 @@ export class Aggregator {
                 metric: representative.metric,
                 operator: representative.operator,
                 threshold: representative.threshold,
+                eventScope: representative.eventScope,
                 earliestDeadline: minDeadline,
                 consensusSource,
                 markets: group.map(g => ({

@@ -5,6 +5,7 @@ export interface MarketClaim {
     metric: string; // e.g., "price_usd", "winner"
     operator: '==' | '>' | '>=' | '<' | '<=';
     threshold: string | number; // e.g., 2000, "YES"
+    eventScope: string; // unique identifier for the real-world fixture (e.g., "nba_2024_mavs_grizzlies")
 
     // Constraints
     deadline: string; // ISO date string
@@ -23,6 +24,7 @@ export interface CanonicalEvent {
     metric: string;
     operator: string;
     threshold: string | number;
+    eventScope: string;
     earliestDeadline: string; // min deadline among grouped claims
     consensusSource: string; // chosen resolution source
     markets: Array<{

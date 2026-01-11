@@ -30,12 +30,12 @@ export const Rules: Record<string, CategoryRule> = {
         extract: (q: string, raw: any) => {
             const subject = RE_ETH.test(q) ? 'ETH_PRICE' : 'BTC_PRICE';
             const metric = 'price_usd';
-            let operator: MarketClaim['operator'] = '>='; // default
+            let operator: MarketClaim['operator'] = '>=';
             if (RE_BELOW.test(q)) operator = '<';
             const match = q.match(RE_PRICE);
             if (!match) return null;
             const val = parseFloat(match[1].replace(/,/g, ''));
-            return { subject, metric, operator, threshold: val };
+            return { subject, metric, operator, threshold: val, eventScope: 'GLOBAL' };
         },
     },
 
@@ -51,6 +51,7 @@ export const Rules: Record<string, CategoryRule> = {
                 metric: 'winner',
                 operator: '==',
                 threshold: ENTITY_MAP[key],
+                eventScope: 'US_PRES_ELECTION_2024'
             };
         },
     },
@@ -65,10 +66,35 @@ export const Rules: Record<string, CategoryRule> = {
             const operator = matchSpread ? '>' : '==';
 
             // Extract potential subject (team name)
-            const subjectMatch = q.match(/Will the (.*?) beat/i) || q.match(/Who will win (.*?) vs/i);
-            const subject = subjectMatch ? subjectMatch[1].trim().toUpperCase().replace(/\s+/g, '_') : 'SPORTS_EVENT';
+            const subjectMatch = q.match(/Will the (.*?) beat/i) || q.match(/Who will win (.*?) vs/i) || q.match(/Will (.*?) win/i);
+            const subjectStr = subjectMatch ? subjectMatch[1].trim().toUpperCase().replace(/\s+/g, '_') : 'SPORTS_EVENT';
 
-            return { subject: `SPORTS_${subject}`, metric, operator, threshold };
+            // Tier 1 - Event Scope Extraction (Deterministic)
+            let league = 'GENERIC';
+            if (/\b(nba)\b/i.test(q)) league = 'NBA';
+            if (/\b(nfl)\b/i.test(q)) league = 'NFL';
+            if (/\b(soccer|champions league|euro 2020|laliga|premier league)\b/i.test(q)) league = 'SOCCER';
+
+            // Extract year if present
+            const yearMatch = q.match(/\b(202\d)\b/);
+            const year = yearMatch ? yearMatch[1] : '2024'; // Default to current/near year if not found
+
+            // Participant normalization (very basic for now)
+            // Ideally we'd extract both teams and sort them alphabetically for the scope
+            // For now, we use the primary subject and search for a secondary "vs" or "against"
+            const vsMatch = q.match(/vs\.?\s+([^?,\s]+)/i) || q.match(/beat\s+the\s+([^?,\s]+)/i);
+            const opponent = vsMatch ? vsMatch[1].trim().toUpperCase().replace(/\s+/g, '_') : 'UNKNOWN';
+
+            const participants = [subjectStr, opponent].sort();
+            const eventScope = `${league.toLowerCase()}_${year}_${participants[0].toLowerCase()}_${participants[1].toLowerCase()}`;
+
+            return {
+                subject: `SPORTS_${subjectStr}`,
+                metric,
+                operator,
+                threshold,
+                eventScope
+            };
         },
     },
 
@@ -88,7 +114,7 @@ export const Rules: Record<string, CategoryRule> = {
             if (RE_ABOVE.test(q)) operator = '>=';
             if (RE_BELOW.test(q)) operator = '<=';
 
-            return { subject, metric: 'price_usd', operator, threshold };
+            return { subject, metric: 'price_usd', operator, threshold, eventScope: 'GLOBAL' };
         },
     },
 
@@ -106,7 +132,7 @@ export const Rules: Record<string, CategoryRule> = {
             let operator: MarketClaim['operator'] = '>=';
             if (RE_BELOW.test(q)) operator = '<=';
 
-            return { subject: 'POP_CULTURE_EVENT', metric, operator, threshold };
+            return { subject: 'POP_CULTURE_EVENT', metric, operator, threshold, eventScope: 'POP_CULTURE_GLOBAL' };
         },
     }
 };
