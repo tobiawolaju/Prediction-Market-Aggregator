@@ -1,0 +1,5 @@
+Polymarket markets count: 20
+Manifold markets count: 59
+Source counts: {"polymarket":20,"manifold":59}
+Sample Polymarket source: polymarket
+Sample Polymarket marketId: 239826

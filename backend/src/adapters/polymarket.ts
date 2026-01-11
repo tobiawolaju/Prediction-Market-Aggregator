@@ -29,7 +29,8 @@ export async function fetchPolymarketMarkets(): Promise<NormalizedMarket[]> {
                     eventKey: event.slug || event.id,
                     outcome: m.outcome || 'YES',
                     impliedProbability: Number(m.price) || 0.5, // Check actual API field
-                    liquidity: Number(m.volume) || 0,
+                    liquidity: Number(m.liquidity) || Number(m.volume) || 0,
+                    lastUpdated: m.updatedAt || new Date().toISOString(),
                     rawPayload: m
                 });
             });

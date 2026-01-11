@@ -8,10 +8,10 @@ export async function fetchManifoldMarkets(): Promise<NormalizedMarket[]> {
     // Fetch active markets from Manifold
     // No auth required for public market data
     const url = `${MANIFOLD_API_URL}/markets?limit=100&sort=created-time&order=desc`;
-    
+
     const response = await axios.get(url);
     const markets = response.data || [];
-    
+
     return markets
       .filter((m: any) => !m.isResolved && m.outcomeType === 'BINARY') // Only active binary markets
       .map((m: any) => ({
@@ -21,6 +21,7 @@ export async function fetchManifoldMarkets(): Promise<NormalizedMarket[]> {
         outcome: 'YES', // Binary markets
         impliedProbability: m.probability || 0.5,
         liquidity: m.totalLiquidity || m.volume || 0,
+        lastUpdated: m.lastUpdatedTime ? new Date(m.lastUpdatedTime).toISOString() : undefined,
         rawPayload: m
       }));
 

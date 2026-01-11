@@ -1,0 +1,3 @@
+Total Events: 79
+Polymarket markets in events: 20
+Manifold markets in events: 59
